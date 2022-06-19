@@ -1,0 +1,24 @@
+.dropzone.dz-clickable {
+    cursor: pointer;
+}
+.dropzone {
+    border: 1px solid rgba(0,0,0,0.03);
+    min-height: 200px;
+    width: 100%;
+    margin-top: 25px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.03);
+    padding: 23px;
+}
+.dropzone {
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: rgba(0,0,0,0.02);
+    padding: 1em;
+}
+.dropzone, .dropzone *, .dropzone-previews, .dropzone-previews * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
