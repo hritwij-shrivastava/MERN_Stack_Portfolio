@@ -1,12 +1,14 @@
 const path = require('path');
 
+const dotenv = require('dotenv').config();
+
 const axios = require('axios');
 
 const fsExtra = require('fs-extra');
 const jwt = require("jsonwebtoken");
 
 const bcrypt = require("bcryptjs");
-const keys = require("../keys");
+// const keys = require("../keys");
 
 const express = require("express");
 const router = express.Router()
@@ -17,7 +19,7 @@ const upload = require('../middleware/upload')
 const validateLoginInput = require("../middleware/validation/login");
 const validateRegisterInput = require("../middleware/validation/register");
 
-const storageLoc = "..\\backend\\src\\frontend\\public\\static\\asset\\"
+const storageLoc = path.join( "..","backend","src","frontend","public","static","asset","/" )
 const removeExtraPath = '../backend/src/frontend'
 
 // Router fetch all website asset for public
@@ -59,7 +61,7 @@ router.get('/get', async (req, res) => {
 router.post("/register", (req, res) => {
     try {
         var token = req.query.token
-        var SECRET_KEY = "$2a$10$kmZrEX3tUjuRhWA0/9L0ae40mADjqz.Go3tiLFnI94ITb0vMzPRK6"
+        var SECRET_KEY = process.env.SECRET_KEY_FOR_REGISTRATION
 
         bcrypt.compare(token, SECRET_KEY).then(isMatch => {
             if (isMatch) {
@@ -122,11 +124,12 @@ router.post("/login", async (req, res) => {
         const password = req.body.password;
         const captcha = req.body.captcha
         const ip = req.body.ip
-        const SECRET_KEY = "Your Google Key"
+        // const SECRET_KEY = "Your Google Key"
+        const SECRET_KEY = process.env.SECRET_KEY_FOR_GOOGLE
         let response
 
         await axios({
-            url: "https://www.google.com/recaptcha/api/siteverify",
+            url: process.env.GOOGLE_API_URL,
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             data: `secret=${SECRET_KEY}&response=${captcha}&remoteip=${ip}`,
@@ -152,7 +155,7 @@ router.post("/login", async (req, res) => {
                         // Sign token
                         jwt.sign(
                             payload,
-                            keys.secretOrKey,
+                            process.env.SECRET_OR_KEY,
                             {
                                 algorithm: "HS256",
                                 expiresIn: 3600 // 60 mints in seconds
@@ -182,7 +185,7 @@ router.post('/frontpage', async (req, res) => {
 
     try {
         var token = (req.headers.token).replace("Bearer ", "")
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const _id = decoded.id
                 const user = await Users.findOne({ _id })
@@ -195,7 +198,7 @@ router.post('/frontpage', async (req, res) => {
                         }
                         else { 
                             const func = async()=>{
-                                let dir = storageLoc + "home\\"
+                                let dir = path.join( storageLoc , "home" , "/" )
                                 fsExtra.rmSync(dir, { recursive: true, force: true });
                                 let source = req.file.path
                                 let destination = dir + req.file.filename
@@ -238,7 +241,7 @@ router.post('/bg', async (req, res) => {
 
     try {
         var token = (req.headers.token).replace("Bearer ", "")
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const _id = decoded.id
                 const user = await Users.findOne({ _id })
@@ -252,7 +255,7 @@ router.post('/bg', async (req, res) => {
                         else{
                             const func = async()=>{
                                 var tmpbg = {}
-                                let dir = storageLoc + "bg\\"
+                                let dir = path.join( storageLoc , "bg" , "/" ) 
                                 fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                 for (let i = 0; i < req.files.length; i++) {
@@ -297,7 +300,7 @@ router.post('/skills', async (req, res) => {
 
     try {
         var token = (req.headers.token).replace("Bearer ", "")
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const _id = decoded.id
                 const user = await Users.findOne({ _id })
@@ -312,7 +315,7 @@ router.post('/skills', async (req, res) => {
                             const func = async()=>{
                                 var skills = user.skills
                                 var tmpSkill = {}
-                                let dir = storageLoc + "skills\\"
+                                let dir = path.join( storageLoc , "skills" , "/" )
             
                                 for (let i = 0; i < req.files.length; i++) {
                                     let source = req.files[i].path
@@ -355,7 +358,7 @@ router.post('/cert', async (req, res) => {
 
     try {
         var token = (req.headers.token).replace("Bearer ", "")
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const _id = decoded.id
                 const user = await Users.findOne({ _id })
@@ -370,7 +373,7 @@ router.post('/cert', async (req, res) => {
                             const func = async()=>{
                                 var certificate = user.certificate
                                 var tmp_certificate = {}
-                                let dir = storageLoc + "cert\\"
+                                let dir = path.join(storageLoc , "cert", "/" )
                                 fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                 for (let i = 0; i < req.files.length; i++) {
@@ -415,7 +418,7 @@ router.post('/resume', async (req, res) => {
 
     try {
         var token = (req.headers.token).replace("Bearer ", "")
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const _id = decoded.id
                 const user = await Users.findOne({ _id })
@@ -429,7 +432,7 @@ router.post('/resume', async (req, res) => {
                         else{
                             const func = async()=>{
                                 var resume = user.resume
-                                let dir = storageLoc + "resume\\"
+                                let dir = path.join(storageLoc , "resume" , "/" )
                                 fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                 let source = req.file.path
@@ -473,7 +476,7 @@ router.post('/resume', async (req, res) => {
 //         var token = (req.headers.token).replace("Bearer ", "")
 //         var name = req.body.name
 //         var detail = req.body.detail
-//         jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+//         jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
 //             if (!err) {
 //                 const _id = decoded.id
 //                 const user = await Users.findOne({ _id })
@@ -535,7 +538,7 @@ router.post('/resume', async (req, res) => {
 //         var blogId = req.body.blogId
 //         var titleArray = title.split(",");
 //         var blogIdArray = blogId.split(",");
-//         jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+//         jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
 //             if (!err) {
 //                 const _id = decoded.id
 //                 const user = await Users.findOne({ _id })
@@ -552,7 +555,7 @@ router.post('/resume', async (req, res) => {
 
 
 //                     if ((req.files.length === titleArray.length) && (req.files.length === blogIdArray.length)) {
-//                         let dir = storageLoc + "portfolio\\"
+//                         let dir = path.join(storageLoc , "portfolio", "/" )
 //                         fsExtra.rmSync(dir, { recursive: true, force: true });
 
 //                         for (let i = 0; i < req.files.length; i++) {

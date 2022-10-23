@@ -1,5 +1,6 @@
 'use strict';
 const path = require('path');
+const dotenv = require('dotenv').config();
 const fs = require('fs').promises;
 const fsExtra = require('fs-extra');
 
@@ -20,11 +21,11 @@ const Users = require('../mongoose/models/users')
 const Blogs = require('../mongoose/models/blogs')
 const upload = require('../middleware/upload')
 const router = express.Router()
-const keys = require("../keys");
+// const keys = require("../keys");
 
 const crypto = require("crypto");
 
-const storageLoc = "..\\backend\\src\\frontend\\public\\static\\blog\\user\\"
+const storageLoc = path.join("..", "backend", "src", "frontend", "public", "static", "blog", "user", "/")
 const removeExtraPath = '../backend/src/frontend'
 
 // To check if a id is valid or not
@@ -83,7 +84,7 @@ router.get('/get', async (req, res) => {
             type = 1
         }
 
-        blogs = await Blogs.find({ status: 1, type: type })
+        blogs = await Blogs.find({ status: 1, type: type },{_id:0,userId:0,viewCount:0,__v:0})
 
 
 
@@ -91,8 +92,8 @@ router.get('/get', async (req, res) => {
         var maxPage = Math.ceil(len / size)
 
         if (len > 0) {
-            recent = await Blogs.find({ status: 1 }).sort({ _id: -1 }).limit(5);
-            popular = await Blogs.find({ status: 1 }).sort({ totalView: -1 }).limit(5)
+            recent = await Blogs.find({ status: 1 },{_id:0,userId:0,viewCount:0,__v:0}).sort({ _id: -1 }).limit(5);
+            popular = await Blogs.find({ status: 1 },{_id:0,userId:0,viewCount:0,__v:0}).sort({ totalView: -1 }).limit(5)
 
             if ((!page) || page == "" || typeof page === 'undefined' || !(String(page).match(/^[0-9]{1,1000}$/))) {
                 page = 1
@@ -146,9 +147,20 @@ router.get('/blogpage/:id', async (req, res) => {
         var status = 1
         var checkId = isValidBlogId(blogId)
         if (checkId) {
-            const blogs = await Blogs.findOne({ blogId, status })
+            const inblogs = await Blogs.findOne({ blogId, status })
 
-            if (blogs) {
+            if (inblogs) {
+                var blogs = {}
+
+                blogs['blogId'] = inblogs['blogId']
+                blogs['blogTitle'] = inblogs['blogTitle']
+                blogs['tagArray'] = inblogs['tagArray']
+                blogs['textAreaArray'] = inblogs['textAreaArray']
+                blogs['totalView'] = inblogs['totalView']
+                blogs['status'] = inblogs['status']
+                blogs['type'] = inblogs['type']
+                blogs['url'] = inblogs['url']
+                blogs['date'] = inblogs['date']
 
                 return res.status(200).json(blogs)
             }
@@ -213,7 +225,7 @@ router.get('/user', async (req, res) => {
     try {
         var token = (req.headers.token).replace("Bearer ", "")
 
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
                 const userId = decoded.id
                 const blogs = await Blogs.find({ userId })
@@ -235,13 +247,15 @@ router.post('/new', async (req, res) => {
     try {
         var token = (req.headers.token).replace("Bearer ", "")
 
-        jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
             if (!err) {
-                const blogId = crypto.randomInt(1000000, 10000000000)
+                // const blogId = crypto.randomInt(1000000, 10000000000)
+                var blogs = await Blogs.find({ status: { $in : [ 0, 1, 2, 3 ] } })
+                const blogId = 1000001 + Object.keys(blogs).length 
                 const userId = decoded.id
                 var blogTitle = "(Untitled)"
                 var tagArray = { 0: 'thumbnail', 1: '' }
-                var textAreaArray = { 0: null, 1: '' }
+                var textAreaArray = { 0: {1:null,2:''}, 1: '' }
                 var status = 0
                 var url = "/read/" + blogId + "/this-blog-has-no-title"
 
@@ -277,7 +291,7 @@ router.post('/status/:id', async (req, res) => {
         var checkId = isValidObjectId(_id)
 
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const { status } = req.body
@@ -323,7 +337,7 @@ router.delete('/delete/:id', async (req, res) => {
         var id = req.params.id
         var checkId = isValidObjectId(id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     Blogs.deleteOne({ "_id": ObjectId(id), "userId": userId }, async (err, obj) => {
@@ -360,7 +374,7 @@ router.get('/edit/:id', async (req, res) => {
         var _id = req.params.id
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const blogs = await Blogs.findOne({ _id, userId })
@@ -389,7 +403,7 @@ router.post('/update/:id', async (req, res) => {
         var url = ""
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     var { blogTitle, tagArray, textAreaArray, status, type } = req.body
@@ -404,6 +418,7 @@ router.post('/update/:id', async (req, res) => {
                         }
                         else {
                             url = "/read/" + blogs.blogId + "/" + (((blogTitle.trim()).toLowerCase()).split(" ")).join("-")
+							url = url.replace("---", "-")
                         }
 
                         const blog = await Blogs.findByIdAndUpdate(_id, { $set: { blogTitle, tagArray, textAreaArray, status, url, type } }, { new: true })
@@ -444,7 +459,7 @@ router.post('/updateimg/:id', async (req, res) => {
         var _id = req.params.id
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const user = await Users.findOne({ _id: userId })
@@ -452,18 +467,18 @@ router.post('/updateimg/:id', async (req, res) => {
                     const user_name = (user.name.replace(/\s+/g, '-')).toLowerCase()
                     const blog_uid = blogs.blogId                    
                     if (blogs) {
-                        const uploadImage = upload.array('img', 15);
+                        const uploadImage = upload.array('img', 50);
 
                         uploadImage(req, res, function (err) {
                             if (err) {
-                                return res.status(400).send("Maximum 15 Pictures are allowed at a time")
+                                return res.status(400).send("Maximum 50 Pictures are allowed at a time")
                             }
                             else{
                                 const func = async()=>{
                                     const tagArray = blogs.tagArray
                                     var textAreaArray = blogs.textAreaArray
                                     var imgPos = []     //To store Image position(Index) in textAreaArray
-                                    let dir = storageLoc + user_name.toString() + "\\" + blog_uid.toString() + "\\img\\"
+                                    let dir = path.join(storageLoc , user_name.toString() , blog_uid.toString() , "/img/")
                                     fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                     for (var key of Object.keys(tagArray)) {
@@ -477,7 +492,7 @@ router.post('/updateimg/:id', async (req, res) => {
                                         let destination = dir + req.files[i].filename
                                         fsExtra.move(source, destination,)
             
-                                        textAreaArray[imgPos[i]] = (destination.replace(/\\/g, '/')).replace(removeExtraPath, "");
+                                        textAreaArray[imgPos[i]][1] = (destination.replace(/\\/g, '/')).replace(removeExtraPath, "");
                                     }
             
                                     await Blogs.findByIdAndUpdate(req.params.id, { $set: { textAreaArray } }, { new: true })
@@ -524,7 +539,7 @@ router.post('/updatepptx/:id', async (req, res) => {
 
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const user = await Users.findOne({ _id: userId })
@@ -543,7 +558,7 @@ router.post('/updatepptx/:id', async (req, res) => {
                                     const tagArray = blogs.tagArray
                                     var textAreaArray = blogs.textAreaArray
                                     var pptxPos = []     //To store PPT position(Index) in textAreaArray
-                                    let dir = storageLoc + user_name.toString() + "\\" + blog_uid.toString() + "\\pptx\\"
+                                    let dir = path.join(storageLoc , user_name.toString() ,  blog_uid.toString() , "/pptx/" )
                                     fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                     for (var key of Object.keys(tagArray)) {
@@ -555,14 +570,14 @@ router.post('/updatepptx/:id', async (req, res) => {
             
                                     for (let i = 0; i < req.files.length; i++) {
                                         let source = req.files[i].path
-                                        let destination = dir + req.files[i].filename
+                                        let destination = path.join(dir , req.files[i].filename)
                                         await fsExtra.move(source, destination,)
             
                                         // ----------------Now Convert PPT Files to PDF ---------------------------
             
                                         const ext = '.pdf'
                                         inputPath = destination;
-                                        outputPath = path.join(dir + `\\${req.files[i].filename}${ext}`);
+                                        outputPath = path.join(dir , `${req.files[i].filename}${ext}`);
             
                                         const docxBuf = await fs.readFile(inputPath);
             
@@ -593,7 +608,8 @@ router.post('/updatepptx/:id', async (req, res) => {
             
                                         // ----------------Now Convert Pdf to JPG ---------------------------
                                         await exec(
-                                            `magick convert "${outputPath}" -quality 100 "${dir}img.jpg"`,
+                                            `sudo convert "${outputPath}" -quality 100 "${dir}img.jpg"`,
+                                            // in ubuntu change above `sudo convert "${outputPath}" -quality 100 "${dir}img.jpg"`
                                             (err, stdout, stderr) => {
                                                 if (err) {
                                                     console.log(err);
@@ -636,7 +652,7 @@ router.post('/updatepdf/:id', async (req, res) => {
         var _id = req.params.id
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const user = await Users.findOne({ _id: userId })
@@ -655,7 +671,7 @@ router.post('/updatepdf/:id', async (req, res) => {
                                     const tagArray = blogs.tagArray
                                     var textAreaArray = blogs.textAreaArray
                                     var pdfPos = []     //To store Pdf position(Index) in textAreaArray
-                                    let dir = storageLoc + user_name.toString() + "\\" + blog_uid.toString() + "\\pdf\\"
+                                    let dir = path.join(storageLoc , user_name.toString() , blog_uid.toString(), "/pdf/" )
                                     fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                     for (var key of Object.keys(tagArray)) {
@@ -667,7 +683,7 @@ router.post('/updatepdf/:id', async (req, res) => {
                                     for (let i = 0; i < req.files.length; i++) {
             
                                         let source = req.files[i].path
-                                        let destination = dir + req.files[i].filename
+                                        let destination = path.join(dir , req.files[i].filename)
                                         fsExtra.move(source, destination,)
             
                                         textAreaArray[pdfPos[i]] = (destination.replace(/\\/g, '/')).replace(removeExtraPath, "");
@@ -710,7 +726,7 @@ router.post('/updatecsv/:id', async (req, res) => {
         var _id = req.params.id
         var checkId = isValidObjectId(_id)
         if (checkId) {
-            jwt.verify(token, keys.secretOrKey, async (err, decoded) => {
+            jwt.verify(token, process.env.SECRET_OR_KEY, async (err, decoded) => {
                 if (!err) {
                     const userId = decoded.id
                     const user = await Users.findOne({ _id: userId })
@@ -729,7 +745,7 @@ router.post('/updatecsv/:id', async (req, res) => {
                                     const tagArray = blogs.tagArray
                                     var textAreaArray = blogs.textAreaArray
                                     var csvPos = []     //To store Pdf position(Index) in textAreaArray
-                                    let dir = storageLoc + user_name.toString() + "\\" + blog_uid.toString() + "\\csv\\"
+                                    let dir = path.join(storageLoc , user_name.toString() , blog_uid.toString() , "/csv/" )
                                     fsExtra.rmSync(dir, { recursive: true, force: true });
             
                                     var source = ""
@@ -750,11 +766,11 @@ router.post('/updatecsv/:id', async (req, res) => {
                                         let tmp_val = {}
                                         tmp_val["csv"] = (destination.replace(/\\/g, '/')).replace(removeExtraPath, "");
             
-                                        for (let j = 0; j < 5; j++) {
+                                        for (let j = 0; j < 5; j++) { // keep j= 5 if u want only 5 row
                                             tmp_val[j] = csvVal[j]
                                         }
             
-                                        textAreaArray[csvPos[i]] = tmp_val
+                                        textAreaArray[csvPos[i]] = csvVal  //use tmp_val here in place of csvVal if u want only 5 row 
                                     }
             
                                     await Blogs.findByIdAndUpdate(req.params.id, { $set: { textAreaArray } }, { new: true })
