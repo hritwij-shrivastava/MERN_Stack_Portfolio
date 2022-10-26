@@ -29,6 +29,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pdf-page-counter": "^1.0.3",
+    "pg": "^8.8.0",
     "validator": "^13.7.0"
   }
 }

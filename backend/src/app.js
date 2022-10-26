@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use('/api/blog', require('./routers/blog'))
 app.use('/api/users', require('./routers/user'))
+app.use('/api/loan', require('./routers/loan'))
 
 app.use(express.static(path.resolve(__dirname,'frontend')))
 app.get("*",(req,res)=>{

@@ -1,15 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.92b3475e.css",
-    "main.js": "/static/js/main.e796baa3.js",
+    "main.js": "/static/js/main.0c013619.js",
     "home.js": "/static/js/home.8293a257.chunk.js",
     "about.js": "/static/js/about.e621ed7c.chunk.js",
     "services.js": "/static/js/services.c71352e3.chunk.js",
     "portfolio.js": "/static/js/portfolio.3be64264.chunk.js",
     "blog.js": "/static/js/blog.ecd8d2cd.chunk.js",
-    "contact.js": "/static/js/contact.a6668b1d.chunk.js",
+    "contact.js": "/static/js/contact.da6076b6.chunk.js",
+    "loan.css": "/static/css/loan.b6086b38.chunk.css",
+    "loan.js": "/static/js/loan.dc203032.chunk.js",
     "blogpage.js": "/static/js/blogpage.3816eae2.chunk.js",
-    "login.js": "/static/js/login.21dcef44.chunk.js",
+    "login.js": "/static/js/login.51c983fd.chunk.js",
     "mainpage.js": "/static/js/mainpage.f9aff52b.chunk.js",
     "editblog.js": "/static/js/editblog.7cd0acc1.chunk.js",
     "previewblog.js": "/static/js/previewblog.e3dd8755.chunk.js",
@@ -21,6 +23,7 @@
     "static/js/194.0d3ed428.chunk.js": "/static/js/194.0d3ed428.chunk.js",
     "static/js/875.a60e6c83.chunk.js": "/static/js/875.a60e6c83.chunk.js",
     "static/js/516.40871443.chunk.js": "/static/js/516.40871443.chunk.js",
+    "static/js/75.78edd12a.chunk.js": "/static/js/75.78edd12a.chunk.js",
     "static/js/246.f77e1abc.chunk.js": "/static/js/246.f77e1abc.chunk.js",
     "static/css/375.4e049a37.chunk.css": "/static/css/375.4e049a37.chunk.css",
     "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.9bbb245e67a133f6e486.eot",
@@ -66,6 +69,6 @@
   },
   "entrypoints": [
     "static/css/main.92b3475e.css",
-    "static/js/main.e796baa3.js"
+    "static/js/main.0c013619.js"
   ]
 }
