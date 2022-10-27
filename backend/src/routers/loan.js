@@ -13,6 +13,50 @@ const client = new Client({
 })
 client.connect();
 
+function convertValidObject(lamount,
+    lamount_term,                                           
+    fname,                                         
+    lname,
+    email,
+    phone,
+    dob,
+    martial_state,
+    number_of_dependants,
+    education,
+    address,
+    country,
+    city,
+    property_area,
+    employment_status,
+    employment_industry,
+    employer_name,
+    month_income,
+    gender
+    ) {
+        const valid = /[^ A-Za-z0-9_@./#&:+-,]/g
+        return(
+        lamount.replace(valid, " "),
+        lamount_term.replace(valid, " "),                                           
+        fname.replace(valid, " "),                                         
+        lname.replace(valid, " "),
+        email.replace(valid, " "),
+        phone.replace(valid, " "),
+        dob.replace(valid, " "),
+        martial_state.replace(valid, " "),
+        number_of_dependants.replace(valid, " "),
+        education.replace(valid, " "),
+        address.replace(valid, " "),
+        country.replace(valid, " "),
+        city.replace(valid, " "),
+        property_area.replace(valid, " "),
+        employment_status.replace(valid, " "),
+        employment_industry.replace(valid, " "),
+        employer_name.replace(valid, " "),
+        month_income.replace(valid, " "),
+        gender.replace(valid, " ")
+        );
+}
+
 // Router to Register
 router.post("/register", async(req, res) => {
     try {
@@ -41,6 +85,45 @@ router.post("/register", async(req, res) => {
             captcha,
             ip
             } = req.body
+
+            lamount,
+                lamount_term,                                           
+                fname,                                         
+                lname,
+                email,
+                phone,
+                dob,
+                martial_state,
+                number_of_dependants,
+                education,
+                address,
+                country,
+                city,
+                property_area,
+                employment_status,
+                employment_industry,
+                employer_name,
+                month_income,
+                gender=convertValidObject(lamount,
+                lamount_term,                                           
+                fname,                                         
+                lname,
+                email,
+                phone,
+                dob,
+                martial_state,
+                number_of_dependants,
+                education,
+                address,
+                country,
+                city,
+                property_area,
+                employment_status,
+                employment_industry,
+                employer_name,
+                month_income,
+                gender
+                )
         // console.log(ip)
         await axios({
             url: process.env.GOOGLE_API_URL,
@@ -51,30 +134,29 @@ router.post("/register", async(req, res) => {
 
         if (response) {
            
-            const regex = /^[ A-Za-z0-9_@./#&:+-]*$/
+            // const regex = /^[ A-Za-z0-9_@./#&:+-]*$/
         
             if
             ( 
-                regex.test(dob) && 
-                regex.test(lamount) && 
-                regex.test(lamount_term) &&                                      
-                regex.test(fname) &&                               
-                regex.test(lname) && 
-                regex.test(email) && 
-                regex.test(phone) && 
-                regex.test(dob) && 
-                regex.test(martial_state) && 
-                regex.test(number_of_dependants) && 
-                regex.test(education) && 
-                regex.test(address) && 
-                regex.test(country) && 
-                regex.test(city) && 
-                regex.test(property_area) && 
-                regex.test(employment_status) && 
-                regex.test(employment_industry) && 
-                regex.test(employer_name) && 
-                regex.test(month_income) && 
-                regex.test(gender) &&
+                // regex.test(lamount) && 
+                // regex.test(lamount_term) &&                                      
+                // regex.test(fname) &&                               
+                // regex.test(lname) && 
+                // regex.test(email) && 
+                // regex.test(phone) && 
+                // regex.test(dob) && 
+                // regex.test(martial_state) && 
+                // regex.test(number_of_dependants) && 
+                // regex.test(education) && 
+                // regex.test(address) && 
+                // regex.test(country) && 
+                // regex.test(city) && 
+                // regex.test(property_area) && 
+                // regex.test(employment_status) && 
+                // regex.test(employment_industry) && 
+                // regex.test(employer_name) && 
+                // regex.test(month_income) && 
+                // regex.test(gender) &&
     
                 (Boolean(dob)) && 
                 (Boolean(lamount)) && 
@@ -109,14 +191,14 @@ router.post("/register", async(req, res) => {
                     // }
                     client.end;
                 })
-                // return res.status(200).json({ status: "Approved" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender });
-                return res.status(200).json({ status: "Approved" });
+                return res.status(200).json({ status: "Approved" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender });
+                // return res.status(200).json({ status: "Approved" });
             
             }
             else{
                 // console.log("bad")
-                // return res.status(200).json({status: "Rejected" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender})            
-                return res.status(200).json({status: "Rejected" })            
+                return res.status(200).json({status: "Rejected" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender})            
+                // return res.status(200).json({status: "Rejected" })            
             }
         }
         else {
