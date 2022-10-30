@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import moment from 'moment'
-
+import assetContext from '../../../Context/Home/assetContext'
 export default function Card2(props) {
+
+    const context = useContext(assetContext);
+    const {webAddress } = context;
 
     const settings = {
         dots: false,
@@ -32,7 +35,7 @@ export default function Card2(props) {
                                         <article className="ps-post ps-post--inside small">
                                             <div className="ps-post__thumbnail">
                                                 <Link className="ps-post__overlay" to={item.url}></Link>
-                                                <img src={item.textAreaArray[0]} alt="img" />
+                                                <img src={`${webAddress}${item.textAreaArray[0][1]}`} alt={item.textAreaArray[0][2]} />
                                             </div>
                                             <div className="ps-post__content">
                                                 <div className="ps-post__meta">

@@ -1,3 +1,4 @@
+/* -------------------------------------- readblog.css Start --------------------------------------- */
 .main-wrapperBlog {
     background: #fff;
     position: relative;
@@ -13,16 +14,19 @@
 .main-wrapperBlog .container {
     max-width: 820px
 }
-.boldHeading{
+
+.boldHeading {
     color: #292929 !important;
     font-weight: bold !important;
 }
+
 @media (max-width: 991.98px) {
 
     .main-wrapperBlog {
         margin-left: 0
     }
 }
+
 .main-wrapperBlog .blog-post .title {
     font-weight: bold;
     font-size: 2rem
@@ -189,6 +193,8 @@
     margin-bottom: 1rem;
     color: #4f4f4f;
     font-weight: 400 !important;
+    /* word-break: break-all;
+    white-space: normal; */
 }
 
 abbr[title],
@@ -287,7 +293,7 @@ sup {
     background-color: #d5c455;
 }
 
-.container-n ul li.active a  {
+.container-n ul li.active a {
     color: white;
     background-color: #d5c455;
 }
@@ -320,7 +326,7 @@ pre {
 
 pre code {
     /* font-size: inherit; */
-    font-size: 1.5em;
+    font-size: 14px;
     color: inherit;
     word-break: normal
 }
@@ -2726,7 +2732,7 @@ textarea.form-control-lg {
     -moz-appearance: none;
     appearance: none;
     /* -webkit-print-print-color-adjust: exact;
-    print-color-adjust: exact */
+        print-color-adjust: exact */
 }
 
 .form-check-input[type="checkbox"] {
@@ -4609,12 +4615,12 @@ fieldset:disabled .main-wrapperBlog .btn {
 }
 
 /* .nav-link {
-    display: block;
-    padding: .5rem 1rem;
-    color: #5FCB71;
-    text-decoration: none;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out
-} */
+        display: block;
+        padding: .5rem 1rem;
+        color: #5FCB71;
+        text-decoration: none;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out
+    } */
 
 @media (prefers-reduced-motion: reduce) {
     .nav-link {
@@ -7114,7 +7120,7 @@ fieldset:disabled .main-wrapperBlog .btn {
     left: 15%;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
-    color: #fff;
+    color: #fff !important;
     text-align: center
 }
 
@@ -8709,9 +8715,9 @@ fieldset:disabled .main-wrapperBlog .btn {
     background-color: #dc3545 !important
 }
 
-.bg-light {
-    background-color: #c2c2c2 !important
-}
+/* .bg-light {
+        background-color: #c2c2c2 !important
+    } */
 
 .bg-dark {
     background-color: #292929 !important
@@ -12365,13 +12371,13 @@ fieldset:disabled .main-wrapperBlog .btn {
 }
 
 /*!  
- * DevBlog - Bootstrap 5 Blog Template For Developers
- * Version: Bootstrap 5 v1.0
- * Author: Xiaoying Riley
- * Copyright: 3rd Wave Media Ltd.
- * Website: http://themes.3rdwavemedia.com/
- * Twitter: @3rdwave_themes
-*/
+     * DevBlog - Bootstrap 5 Blog Template For Developers
+     * Version: Bootstrap 5 v1.0
+     * Author: Xiaoying Riley
+     * Copyright: 3rd Wave Media Ltd.
+     * Website: http://themes.3rdwavemedia.com/
+     * Twitter: @3rdwave_themes
+    */
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12816,7 +12822,4 @@ a.text-link:hover {
     }
 }
 
-
-
-
-
+/* -------------------------------------- readblog.css End --------------------------------------- */

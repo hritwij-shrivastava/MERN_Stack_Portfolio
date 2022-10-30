@@ -27,7 +27,7 @@ export default class DropDownBox extends Component {
             tmp[position] = { 1: '' }
             await this.context.setTextAreaArrayVal(tmp)
         }
-        if (val === "blockquote" || val === "code") {
+        if (val === "blockquote" || val === "code" || val === "code_output" || val === 'img') {
             tmp = this.context.textAreaArray
             tmp[position] = { 1: '', 2: '' }
             await this.context.setTextAreaArrayVal(tmp)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
-import '../static/css/portfolio.css'
+import { Link } from "react-router-dom"
+import {Helmet} from "react-helmet";
+
 import Pagination from './Config/Blog/Pagination'
 import assetContext from '../Context/Home/assetContext'
 
@@ -40,6 +41,9 @@ export default class Portfolio extends Component {
     render() {
         return (
             <>
+            <Helmet>
+                    <link rel="canonical" href="https://hritwij.com/portfolio/" />
+                </Helmet>
             <div className="firstcontainer">
                 <div style={{ background: "#ffff", padding: "1px" }}>
                     <section className="ftco-section ftco-project" style={{ background: "#ffff", marginTop: "70px", paddingTop: "50px" }}>
@@ -49,7 +53,7 @@ export default class Portfolio extends Component {
                                     {(this.state.blogs).map((blog, index) => {
                                         return (
                                             <div className="col-md-4" key={index}>
-                                                <div className="project img ftco-animate d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${blog.textAreaArray[0]})` }}>
+                                                <div className="project img ftco-animate d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${this.context.webAddress}${blog.textAreaArray[0][1]})`,backgroundSize: "contain" }}>
                                                     <div className="overlay"></div>
                                                     <div className="text text-center p-4">
                                                         <h3><Link to={blog.url}>{blog.blogTitle}</Link></h3>

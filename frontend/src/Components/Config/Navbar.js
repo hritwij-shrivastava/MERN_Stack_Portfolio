@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import BottomNavbar from './BottomNavbar';
-import { NavLink } from "react-router-dom";
+import BottomNavbar from './BottomNavbar'
+import { NavLink } from "react-router-dom"
+
 import '../../static/css/bootstrap.css'
-import '../../static/css/all.css'
-import '../../static/css/navbar.css'
 import '../../static/css/ionicons.min.css'
-import '../../static/css/mainHome.css'
-import '../../static/css/myStyle.css'
-import '../../static/css/about.css'
-import '../../static/css/services.css'
-import '../../static/css/contact.css'
+import '../../static/css/main.css'
 
 export default class Navbar extends Component {
     state = {

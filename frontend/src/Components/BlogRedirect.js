@@ -1,5 +1,6 @@
 import React, {useContext, useEffect } from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
+
 import assetContext from '../Context/Home/assetContext'
 import BlogPage from './BlogPage'
 
@@ -47,7 +48,7 @@ export default function BlogRedirect() {
                     if(data.err){
 
                         // error means blog with given id is not present in database
-                        console.log(data.err)
+                        // console.log(data.err)
 
                         // then redirect to blog 
                         navigate({
@@ -67,7 +68,7 @@ export default function BlogRedirect() {
                     if(data.err){
 
                         // error means blog with given id is not present in database
-                        console.log(data.err)
+                        // console.log(data.err)
 
                         // then redirect to blog 
                         navigate({

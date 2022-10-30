@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-
-import assetContext from '../Context/Home/assetContext'
-import '../static/css/blog.css'
+import { Helmet } from "react-helmet";
 
 import SmallCard from './Config/Blog/SmallCard'
 import BlogCard from './Config/Blog/BlogCard'
 import Pagination from './Config/Blog/Pagination'
 import RecentPosts from './Config/Blog/RecentPosts'
+import assetContext from '../Context/Home/assetContext'
 
 const MaximumBlogToDisplay = 6
 const Type4Blog = 1
@@ -23,7 +22,7 @@ export class Blog extends Component {
   }
 
   getAllBlog = async (page) => {
-    const data = await this.context.getAllBlog(page,Type4Blog,MaximumBlogToDisplay)
+    const data = await this.context.getAllBlog(page, Type4Blog, MaximumBlogToDisplay)
     await this.setState({
       blogs: data.blogs,
       totalBlogs: data.totalLength,
@@ -46,6 +45,9 @@ export class Blog extends Component {
   render() {
     return (
       <>
+        <Helmet>
+          <link rel="canonical" href="https://hritwij.com/blog/" />
+        </Helmet>
         <div className="firstcontainer">
           <div style={{ background: "#ffff", padding: "1px" }}>
             <div className="container">
@@ -59,7 +61,7 @@ export class Blog extends Component {
                           <div className="row">
                             {(this.state.blogs).map((blog, index) => {
                               return (
-                                <BlogCard key={index} blog={blog} />
+                                <BlogCard key={index} blog={blog} webAddress={this.context.webAddress} />
                               )
                             })}
 

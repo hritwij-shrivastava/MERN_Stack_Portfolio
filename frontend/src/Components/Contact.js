@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from "react-helmet";
+import assetContext from '../Context/Home/assetContext'
 
 export default function Contact() {
     const [a, setA] = useState("")
@@ -6,10 +8,19 @@ export default function Contact() {
     const [c, setC] = useState("")
     const [d, setD] = useState("")
 
+    const context = useContext(assetContext);
+    const {userdata,getData} = context;
+
+    useEffect(() => {
+        if (Object.keys(userdata).length === 0) {
+            getData()
+        }
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
+
     const formSubmit = (e) => {
         e.preventDefault();
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwE6CPMai9-VcRwFcZ0r4tn-vTfPSrTMumni-7LaG1lXssfJKa7IxiALKnOMajhrnTO/exec'
-        
+
         let url = 'https://api.ipify.org?format=json';
         var formData = new FormData();
         let ip;
@@ -23,29 +34,28 @@ export default function Contact() {
                 formData.append("Subject", c);
                 formData.append("Message", d);
                 formData.append("IP", ip);
-                console.log(out);
-
                 if (a === null || a === "" || b === null || b === "" || c === null || c === "" || d === null || d === "") {
                     alert("Please Fill All Required Field");
                 }
                 else {
                     fetch(scriptURL, { method: 'POST', body: formData })
                         .then(response => {
-                            // console.log('Success!', response);
                             alert("Message Sent");
                         })
                         .catch(error => {
-                            console.error('Error!', error.message);
                             alert("Error sending message");
                         })
                 }
 
             })
-            .catch(err => console.error('Error!', err.message));
+        // .catch(err => console.error('Error!', err.message));
 
     }
     return (
         <>
+            <Helmet>
+                <link rel="canonical" href="https://hritwij.com/contact/" />
+            </Helmet>
             <div className="firstcontainer" style={{ background: "#F6F6F6", paddingTop: "0.02px" }}>
                 <div style={{ background: "#F6F6F6", paddingTop: "50px" }}>
                     <div className="contact-form">
@@ -87,28 +97,28 @@ export default function Contact() {
                                                     <div className="row">
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <input type="text" onChange={(e)=>{setA(e.target.value)}} className="form-control" name="Name" id="name" placeholder="Name" required />
+                                                                <input type="text" onChange={(e) => { setA(e.target.value) }} className="form-control" name="Name" id="name" placeholder="Name" required />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <input type="email" onChange={(e)=>{setB(e.target.value)}} className="form-control" name="Email" id="email" placeholder="Email" required />
+                                                                <input type="email" onChange={(e) => { setB(e.target.value) }} className="form-control" name="Email" id="email" placeholder="Email" required />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <input type="text" onChange={(e)=>{setC(e.target.value)}} className="form-control" name="Subject" id="subject" placeholder="Subject" required />
+                                                                <input type="text" onChange={(e) => { setC(e.target.value) }} className="form-control" name="Subject" id="subject" placeholder="Subject" required />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <textarea name="Message" onChange={(e)=>{setD(e.target.value)}} className="form-control" id="message" cols="30" rows="4"
+                                                                <textarea name="Message" onChange={(e) => { setD(e.target.value) }} className="form-control" id="message" cols="30" rows="4"
                                                                     placeholder="Create a message here" required></textarea>
                                                             </div>
                                                         </div>
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                                <button  className="pagelink mybtn mybtn-bg" onClick={formSubmit}><span style={{textTransform: "none"}}>Send Message</span></button>
+                                                                <button className="pagelink mybtn mybtn-bg" onClick={formSubmit}><span style={{ textTransform: "none" }}>Send Message</span></button>
                                                                 <div className="submitting"></div>
                                                             </div>
                                                         </div>

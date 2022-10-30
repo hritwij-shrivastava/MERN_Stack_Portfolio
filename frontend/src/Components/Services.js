@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet";
 import moment from 'moment'
 
 import Card from './Config/Services/Card'
+import LightBox from './Config/LightBox'
+import assetContext from '../Context/Home/assetContext'
+
 import s1 from '../static/img/s1.png'
 import s2 from '../static/img/s2.png'
 import s3 from '../static/img/s3.png'
@@ -10,8 +14,6 @@ import s4 from '../static/img/s4.png'
 import s5 from '../static/img/s5.png'
 import s6 from '../static/img/s7.png'
 import hme from '../static/img/hme.png'
-import LightBox from './Config/LightBox'
-import assetContext from '../Context/Home/assetContext'
 
 export default class Services extends Component {
     static contextType = assetContext
@@ -44,6 +46,9 @@ export default class Services extends Component {
         }
         return (
             <>
+                <Helmet>
+                    <link rel="canonical" href="https://hritwij.com/services/" />
+                </Helmet>
                 <div className="firstcontainer">
                     <LightBox ref={this.child} images={images} />
                     <div style={{ paddingTop: "35px", background: "-webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%)" }}>
@@ -51,7 +56,7 @@ export default class Services extends Component {
                             <div className="row justify-content-center mb-5">
                                 <div className="col-md-7 heading-section text-center" style={{ color: "#ffff" }}>
                                     <span className="subheading">Experience Feeds</span>
-                                    <h2>Work Experience</h2>
+                                    <h2 style={{ color: "#fff" }}>Work Experience</h2>
                                 </div>
                             </div>
                             <div className="row service-area-wrapper">
@@ -137,7 +142,7 @@ export default class Services extends Component {
                                     <h2>Latest Blogs</h2>
                                 </div>
                             </div>
-                            {(Object.keys(this.context.userdata).length !== 0)?
+                            {(Object.keys(this.context.userdata).length !== 0) ?
                                 <div className="row">
                                     {Object.keys(this.context.userdata.blog).map((key, index) => {
                                         return (
@@ -145,7 +150,7 @@ export default class Services extends Component {
                                                 <article className="single-blog">
                                                     <div className="blog-thumbnail">
                                                         <Link to={this.context.userdata.blog[key].url}>
-                                                            <img src={this.context.userdata.blog[key].textAreaArray[0]} alt="post" />
+                                                            <img src={`${this.context.webAddress}${this.context.userdata.blog[key].textAreaArray[0][1]}`} alt={this.context.userdata.blog[key].textAreaArray[0][2]} />
                                                         </Link>
                                                         <Link to={this.context.userdata.blog[key].url} className="catagory-name" >Blog</Link>
                                                         <div className="blog-date">
@@ -162,7 +167,7 @@ export default class Services extends Component {
                                         )
                                     })}
                                 </div>
-                            :null}
+                                : null}
                         </div>
                     </div>
                 </div>

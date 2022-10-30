@@ -5,7 +5,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 // const host = "http://hritwij.com:9000"
 // const host = "http://127.0.0.1:9000"
-const host = "http://hritwij.com"
+const host = "https://hritwij.com"
 // Register User
 export const registerUser = (userData, history) => dispatch => {
     axios

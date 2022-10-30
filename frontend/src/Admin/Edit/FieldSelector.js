@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import assetContext from '../../Context/Home/assetContext'
+
 import CsvField from './Config/CsvField'
 import ImgField from './Config/ImgField'
 import ListField from './Config/ListField'
 import PdfField from './Config/PdfField'
 import PptField from './Config/PptField'
 import TableField from './Config/TableField'
+import assetContext from '../../Context/Home/assetContext'
 
 export default class FieldSelector extends Component {
 
@@ -43,7 +44,17 @@ export default class FieldSelector extends Component {
     var position = this.props.position
     return (
       <>
-        {((this.context.tagArray[position] === "h1") || (this.context.tagArray[position] === "h2") || (this.context.tagArray[position] === "h3") || (this.context.tagArray[position] === "h4") || (this.context.tagArray[position] === "h5") || (this.context.tagArray[position] === "h6") || (this.context.tagArray[position] === "iframe")) ?
+        {((this.context.tagArray[position] === "h1") || (this.context.tagArray[position] === "h2")  
+                                                     || (this.context.tagArray[position] === "h3") 
+                                                     || (this.context.tagArray[position] === "h4")  
+                                                     || (this.context.tagArray[position] === "h5")  
+                                                     || (this.context.tagArray[position] === "h6")  
+                                                     || (this.context.tagArray[position] === "iframe")
+                                                     || (this.context.tagArray[position] === "description")
+                                                     || (this.context.tagArray[position] === "keywords")
+                                                     || (this.context.tagArray[position] === "author")
+                                                     || (this.context.tagArray[position] === "prevblog")
+                                                     || (this.context.tagArray[position] === "nextblog") ) ?
           <input type="text" style={{ width: "90%" }} onChange={(e) => { this.onChangeTextArea(e, position) }} value={this.context.textAreaArray[position]} />
           : null}
 
@@ -51,7 +62,7 @@ export default class FieldSelector extends Component {
           <textarea rows="8" cols="70" onChange={(e) => { this.onChangeTextArea(e, position) }} value={this.context.textAreaArray[position]}></textarea>
           : null}
 
-        {(this.context.tagArray[position] === "code") ?
+        {(this.context.tagArray[position] === "code") || (this.context.tagArray[position] === "code_output") ?
           <>
             <textarea rows="8" cols="70" value={this.context.textAreaArray[position][1]} onChange={(e) => { this.onChangeListVal(e, position, 1) }}></textarea>
             <label style={{ marginRight: "20px" }}>Code Language</label>
@@ -71,8 +82,12 @@ export default class FieldSelector extends Component {
           <ListField position={position} onChangeListVal={this.onChangeListVal} />
           : null}
 
-        {(this.context.tagArray[position] === "img") ?
+        {(this.context.tagArray[position] === "img") || (this.context.tagArray[position] === "thumbnail") ?
+        <>
           <ImgField position={position} />
+          <label style={{ marginRight: "20px" }}>Alternate Text</label>
+          <input type="text" value={this.context.textAreaArray[position][2]} onChange={(e) => { this.onChangeListVal(e, position, 2) }} />
+        </>
           : null}
 
         {(this.context.tagArray[position] === "pptx") ?

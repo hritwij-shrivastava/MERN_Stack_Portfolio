@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { Dropdown, Collapse } from 'react-bootstrap'
-import '../static/css/admin-home.css'
-import '../static/css/bootstrap.css'
-import '../static/css/admin.css'
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+
+import { logoutUser } from "../Redux/actions/authActions"
 import assetContext from '../Context/Home/assetContext'
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../Redux/actions/authActions";
 
 import Cards from './Utilities/Cards';
 import ProfilePage from './Utilities/ProfilePage'
 import AboutPage from './Utilities/AboutPage'
 import ServicesPage from './Utilities/ServicesPage'
-// import PortfolioPage from './Utilities/PortfolioPage'
 import Background from './Utilities/Background'
-
 import Post from './Blog/Post'
+
+import '../static/css/bootstrap.css'
+import '../static/css/ionicons.min.css'
+import '../static/css/main.css'
 
 class Mainpage extends Component {
 

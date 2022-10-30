@@ -1,11 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import ParticlesBackground from './Config/Home/ParticlesBackground';
+import React, { useContext, useEffect } from 'react'
+import { Link } from "react-router-dom"
+
+import ParticlesBackground from './Config/Home/ParticlesBackground'
 import assetContext from '../Context/Home/assetContext'
-
-import '../static/css/slick.min.css'
-import '../static/css/slick-theme.min.css'
-
 
 export default function Home() {
 
@@ -28,8 +25,9 @@ export default function Home() {
                             <div className="row">
                                 <div className="col-lg-6">
                                     <div className="main-profile-image">
-                                        <img src={`${webAddress}${userdata.frontPage}`} width="485px" height="665px" alt="hritwij shrivastava"/>
-                                        {/* <img src={require('../static/asset/home/img1653983770787.jpg')} alt=""/> */}
+                                        {!(typeof userdata.frontPage === "undefined")?
+                                        <img src={`${webAddress}${userdata.frontPage}`} alt="hritwij shrivastava"/>
+                                        :null}
                                     </div>
                                 </div>
                                 <div className="col-lg-6  align-self-center">

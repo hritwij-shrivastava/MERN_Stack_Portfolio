@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import assetContext from '../../Context/Home/assetContext'
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import BlogPage from '../../Components/BlogPage'
+import assetContext from '../../Context/Home/assetContext'
 
 class PreviewBlog extends Component {
 
@@ -20,7 +19,7 @@ class PreviewBlog extends Component {
         else{
             const func =async()=>{
                 var id = window.location.pathname.split("/preview/")[1]
-                console.log(id)
+                // console.log(id)
                 var data =  await this.context.getBlogData(id)
                 if(data.err){
                     alert(data.err)

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import Slider from "react-slick";
-import '../../../static/css/tiny.css'
+
 import LeftArrow from "../../../static/img/left-arrow.svg"
 import RightArrow from "../../../static/img/right-arrow.svg"
 

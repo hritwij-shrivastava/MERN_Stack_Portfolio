@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import Slider from "react-slick";
-import '../../../static/css/tiny.css'
+
+import assetContext from '../../../Context/Home/assetContext'
+
 import LeftArrow from "../../../static/img/simple-prev.svg"
 import RightArrow from "../../../static/img/simple-next.svg"
-import assetContext from '../../../Context/Home/assetContext'
+
 
 const data = []
 export default function SmallSkill() {
@@ -23,8 +25,6 @@ export default function SmallSkill() {
     }
 
     
-
-
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
         <img src={LeftArrow} alt="prevArrow" {...props} className="simple-slide simpleSlide-prev"/>
     );
@@ -76,8 +76,8 @@ export default function SmallSkill() {
                     return (
                         <div className="card__container--inner--card" key={index}>
                            <div className="clients-content ">
-                                <a href={item.url} rel="noreferrer" target="_blank">
-                                    <img src={item.url} className="attachment-image" alt="" loading="lazy"/>
+                                <a href={`${item.url}`} rel="noreferrer" target="_blank">
+                                    <img src={`${item.url}`} className="attachment-image" alt="" loading="lazy"/>
                                 </a>
                             </div>
                         </div>

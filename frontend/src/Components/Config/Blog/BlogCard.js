@@ -28,9 +28,9 @@ export default class BlogCard extends Component {
                     <article className="single-blog">
                         <div className="blog-thumbnail">
                             <Link to={url}>
-                                <img src={thumbnail} alt="post" />
+                                <img src={this.props.webAddress + thumbnail[1]} alt={thumbnail[2]} />
                             </Link>
-                            <Link to={url} className="catagory-name" >Portfolio</Link>
+                            <Link to={url} className="catagory-name" >Blog</Link>
                             <div className="blog-date">
                                 <h3>{moment(date).format('DD')}</h3>
                                 <span>{moment(date).format('MMM')}</span>

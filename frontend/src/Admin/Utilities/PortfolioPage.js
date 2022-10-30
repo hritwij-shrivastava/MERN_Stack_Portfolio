@@ -30,7 +30,7 @@ export default class PortfolioPage extends Component {
     }
     onSubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state.imgFileArray, this.state.title, this.state.blogId)
+        // console.log(this.state.imgFileArray, this.state.title, this.state.blogId)
         await this.context.sendPortfolio(this.state.imgFileArray, this.state.title, this.state.blogId);
         var notice = this.context.serverRes
         alert(notice)

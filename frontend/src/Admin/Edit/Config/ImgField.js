@@ -31,7 +31,7 @@ export default class ImgField extends Component {
         await this.context.setImgFilesArrayVal(tmp)
 
         tmp = this.context.textAreaArray
-        tmp[position] = val.name
+        tmp[position][1] = val.name
         await this.context.setTextAreaArrayVal(tmp)
         this.ref.current.value = "";
         this.setState({})

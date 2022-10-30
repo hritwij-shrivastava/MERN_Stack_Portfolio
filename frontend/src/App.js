@@ -34,7 +34,7 @@ const Blog = lazy(() => import(/* webpackChunkName: 'blog' */'./Components/Blog'
 
 const Contact = lazy(() => import(/* webpackChunkName: 'contact' */'./Components/Contact'))
 
-
+const Loan = lazy(() => import(/* webpackChunkName: 'loan' */'./Components/Extra/Loan'))
 
 const BlogRedirect = lazy(() => import(/* webpackChunkName: 'blogpage' */'./Components/BlogRedirect'))
 
@@ -82,6 +82,7 @@ function App() {
                 <Route path="/portfolio/*"  element={<> <Navbar/>     <ControlledCarousel/> <Portfolio/> <Footer/>  </>} />
                 <Route path="/blog/*"       element={<> <Navbar/>     <ControlledCarousel/> <Blog/>      <Footer/>  </>} />
                 <Route path="/contact/*"    element={<> <Navbar/>     <ControlledCarousel/> <Contact/>   <Footer/>  </>} />
+                <Route path="/loan/*"       element={<> <Navbar/>     <ControlledCarousel/> <Loan/>      <Footer/>  </>} />
             
                 <Route path="/read/:id/*"   element={<> <Navbar/>     <BlogRedirect/>                    <Footer/>  </>} />
                 <Route path="/login/*"      element={<> <Navbar/>     <Login/>                           <Footer/>  </>} />

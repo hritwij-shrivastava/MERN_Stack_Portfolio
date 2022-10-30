@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
+import {Helmet} from "react-helmet";
+
 import ModalVideo from 'react-modal-video'
-import '../static/css/modal-video.css'
+
 import AboutMe from './Config/About/AboutMeSection'
 import AboutEduSection from './Config/About/AboutEduSection'
 import SmallSkill from './Config/About/SmallSkill'
 import assetContext from '../Context/Home/assetContext'
-
-
 
 export class About extends Component {
 
@@ -34,6 +34,10 @@ export class About extends Component {
     render() {
         return (
             <>
+                <Helmet>
+                    <link rel="canonical" href="https://hritwij.com/about/" />
+                </Helmet>
+            
                 <div className="firstcontainer">
                     {/* <ModalVideo channel='youtube' autoplay isOpen={this.state.isOpen} videoId="WnfuIAJJ4G0" onClose={() => this.setState({ isOpen: false })} /> */}
                     <ModalVideo channel='custom' url="/intro.mp4" isOpen={this.state.isOpen} onClose={() => this.setState({ isOpen: false })} />

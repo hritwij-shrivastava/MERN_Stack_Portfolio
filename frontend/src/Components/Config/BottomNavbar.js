@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import '../../static/css/bottomnavbar.css'
+
 import bag from '../../static/img/bag.svg'
 import bagFill from '../../static/img/bag-fill.svg'
 import blog from '../../static/img/blog.svg'

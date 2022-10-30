@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from "react-router-dom"
+import assetContext from '../../Context/Home/assetContext'
 
 export default function Footer() {
+    const context = useContext(assetContext);
+    const {webAddress,userdata} = context;
+
     return (
         <>
             <footer className="footer" style={{paddingBottom: "0px" ,background: "#17222b"}}>
@@ -16,18 +20,18 @@ export default function Footer() {
                                         I'm an experienced software engineer. In my two years in this industry, I've sharpened my analytical thinking and collaboration skills.
                                         </p> */}
                                         <div className="footer-social-links">
-                                            <Link to="/">
+                                            <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/hritwij/">
                                                 <i className="fab fa-linkedin"></i>
-                                            </Link>
-                                            <Link to="/">
+                                            </a>
+                                            <a target="_blank" rel="noreferrer" href="https://www.facebook.com/hritwij.shrivastava/">
                                                 <i className="fab fa-facebook-f"></i>
-                                            </Link>
-                                            <Link to="/">
+                                            </a>
+                                            <a target="_blank" rel="noreferrer" href="https://github.com/hritwij-shrivastava">
                                                 <i className="fab fa-github"></i>
-                                            </Link>
-                                            <Link to="/">
+                                            </a>
+                                            <a target="_blank" rel="noreferrer" href="https://www.youtube.com/channel/UCXb45TeeuSM_OYDY-UN6WCQ">
                                                 <i className="fab fa-youtube"></i>
-                                            </Link>
+                                            </a>
                                         </div>
                                 </div>
                             </div>
@@ -36,23 +40,25 @@ export default function Footer() {
                                     <h6 className="footer-title">Usefull Links</h6>
                                     <ul className="footer-links">
                                         <li>
-                                            <Link to="/">About</Link>
+                                            <Link to="/about">About</Link>
                                         </li>
                                         <li>
-                                            <Link to="/">My Services</Link>
+                                            <Link to="/services">My Services</Link>
                                         </li>
                                         <li>
-                                            <Link to="/">My Resume</Link>
+                                            <a href={`${webAddress}${userdata.resume}`} target="_blank" rel="noreferrer">
+                                                My Resume
+                                            </a>
                                         </li>
                                         <li>
-                                            <Link to="/">My Works</Link>
+                                            <Link to="/portfolio">My Works</Link>
                                         </li>
                                         <li>
-                                            <Link to="/">Get in Touch</Link>
+                                            <Link to="/contact">Get in Touch</Link>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <Link to="/">Privacy Policy</Link>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>

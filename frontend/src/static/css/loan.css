@@ -1,0 +1,102 @@
+.section-padding {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.mr0 {
+    padding-right: 0 !important;
+}
+.single-get-touch {
+    margin-bottom: 10px;
+}
+.single-get-touch input{
+    font-size: 12px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e9e9e9;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+.single-get-touch .input {
+    font-size: 12px;
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+    border-radius: 4px;
+    text-align: left;
+    background-color: #fff;
+}
+.single-get-touch .input input{
+    border:none;
+}
+.react-date-picker__wrapper {
+    border: none !important;
+}
+.single-get-touch select {
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+    color: #777;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    font-size: 12px;
+}
+.single-get-check {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.radiobox {
+    text-align: left;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 16px;
+}
+.radiobox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.radiobox input:checked ~ .checkmark {
+    background-color: #3a7cdd;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.radiobox input:checked ~ .checkmark:after {
+    display: block;
+}
+.radiobox .checkmark:after {
+    top: 5px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: white;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.radiobox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.red_alert{
+    border: 2px solid red !important;
+}

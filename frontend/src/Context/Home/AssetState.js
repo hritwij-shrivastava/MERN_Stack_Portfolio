@@ -6,8 +6,8 @@ const AssetState = (props) => {
     // const host = "http://127.0.0.1:9000"
     // const webAddress = "http://127.0.0.1:9000/"
     // const host = "http://hritwij.com:9000"
-    const host = "http://hritwij.com"
-    const webAddress = "http://hritwij.com/"
+    const host = "https://hritwij.com"
+    const webAddress = "https://hritwij.com"
     const tagTitle = {
         'h1': "Biggest Heading (h1)",
         'h2': "Bigger Heading (h2)",
@@ -17,7 +17,8 @@ const AssetState = (props) => {
         'h6': "Smallest Heading (h6)",
         'img': "Image (img)",
         'p': "Paragraph (p)",
-        'code': "code",
+        'code': "Code",
+        'code_output': "Output of code",
         'ul': "Unordered List (ul)",
         'ol': "Ordered List (ol)",
         'blockquote': "Quote (blockquote)",
@@ -49,7 +50,6 @@ const AssetState = (props) => {
         const response = await fetch(url);
         const res = await response.json()
         setUserdata(res)
-        console.log(res.blog)
     }
 
     // Get All published blogs
@@ -198,40 +198,40 @@ const AssetState = (props) => {
 
     const setBlogIdVal = async (val) => {
         await setBlogId(val)
-        console.log("blogId", blogId)
+        // console.log("blogId", blogId)
     }
 
     const setBlogTitleVal = async (val) => {
         await setBlogTitle(val)
-        console.log("blogtitle", blogTitle)
+        // console.log("blogtitle", blogTitle)
     }
     const setTagArrayVal = async (val) => {
         await setTagArray(val)
-        console.log("tag", tagArray)
+        // console.log("tag", tagArray)
     }
     const setTextAreaArrayVal = async (val) => {
         await setTextAreaArray(val)
-        console.log("text", textAreaArray)
+        // console.log("text", textAreaArray)
     }
     const setImgFilesArrayVal = async (val) => {
         await setImgFilesArray(val)
-        console.log("img", imgFilesArray)
+        // console.log("img", imgFilesArray)
     }
     const setCsvFilesArrayVal = async (val) => {
         await setCsvFilesArray(val)
-        console.log("csv", csvFilesArray)
+        // console.log("csv", csvFilesArray)
     }
     const setPptxFilesArrayVal = async (val) => {
         await setPptxFilesArray(val)
-        console.log("ppt", pptxFilesArray)
+        // console.log("ppt", pptxFilesArray)
     }
     const setPdfFilesArrayVal = async (val) => {
         await setPdfFilesArray(val)
-        console.log("pdf", pdfFilesArray)
+        // console.log("pdf", pdfFilesArray)
     }
     const setImgTmpUrlVal = async (val) => {
         await setImgTmpUrl(val)
-        console.log("imgTmp", imgTmpUrl)
+        // console.log("imgTmp", imgTmpUrl)
     }
 
     const sendBlogData = async (id, blogTitle, tagArray, textAreaArray, status,type) => {

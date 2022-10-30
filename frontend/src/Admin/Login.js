@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
-import '../static/css/admin.css'
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { loginUser } from "../Redux/actions/authActions";
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+
+import { loginUser } from "../Redux/actions/authActions"
 import spinner from '../static/img/loader.gif'
 import kiteretsu from '../static/img/kiteretsu.jpg'
 
