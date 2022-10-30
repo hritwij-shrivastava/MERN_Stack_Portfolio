@@ -3,6 +3,7 @@ const router = express.Router()
 const {Client} = require("pg");
 const axios = require('axios');
 const dotenv = require('dotenv').config();
+const FormData = require("form-data");
 
 const client = new Client({
     host: process.env.HOST,
@@ -31,6 +32,7 @@ function convertValidObject(lamount,
     employment_industry,
     employer_name,
     month_income,
+    credit_history,
     gender
     ) {
         const valid = /[^ A-Za-z0-9_@./#&:+-,]/g
@@ -53,6 +55,7 @@ function convertValidObject(lamount,
         employment_industry.replace(valid, " "),
         employer_name.replace(valid, " "),
         month_income.replace(valid, " "),
+        credit_history.replace(valid, " "),
         gender.replace(valid, " ")
         );
 }
@@ -82,6 +85,7 @@ router.post("/register", async(req, res) => {
             employer_name,
             month_income,
             gender,
+            credit_history,
             captcha,
             ip
             } = req.body
@@ -104,7 +108,8 @@ router.post("/register", async(req, res) => {
                 employment_industry,
                 employer_name,
                 month_income,
-                gender=convertValidObject(lamount,
+                gender,
+                credit_history=convertValidObject(lamount,
                 lamount_term,                                           
                 fname,                                         
                 lname,
@@ -122,7 +127,8 @@ router.post("/register", async(req, res) => {
                 employment_industry,
                 employer_name,
                 month_income,
-                gender
+                gender,
+                credit_history
                 )
         // console.log(ip)
         await axios({
@@ -177,10 +183,11 @@ router.post("/register", async(req, res) => {
                 (Boolean(employment_industry)) && 
                 (Boolean(employer_name)) && 
                 (Boolean(month_income)) && 
-                (Boolean(gender))       
+                (Boolean(gender)) &&
+                (Boolean(credit_history))      
             ){
         
-                var sql = "INSERT INTO users (lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender) VALUES ('"+lamount+"','"+lamount_term+"','"+fname+"','"+lname+"','"+email+"','"+phone+"','"+dob+"','"+martial_state+"','"+number_of_dependants+"','"+education+"','"+address+"','"+country+"','"+city+"','"+property_area+"','"+employment_status+"','"+employment_industry+"','"+employer_name+"','"+month_income+"','"+gender+"')";
+                var sql = "INSERT INTO users (lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender,credit_history) VALUES ('"+lamount+"','"+lamount_term+"','"+fname+"','"+lname+"','"+email+"','"+phone+"','"+dob+"','"+martial_state+"','"+number_of_dependants+"','"+education+"','"+address+"','"+country+"','"+city+"','"+property_area+"','"+employment_status+"','"+employment_industry+"','"+employer_name+"','"+month_income+"','"+gender+"','"+credit_history+"')";
                 // console.log("good")
                 client.query(sql,(err,res)=>{
                     // if(!err){
@@ -191,7 +198,39 @@ router.post("/register", async(req, res) => {
                     // }
                     client.end;
                 })
-                return res.status(200).json({ status: "Approved" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender });
+                let data
+                const form = new FormData();
+                form.append("lamount",lamount);
+                form.append("lamount_term",lamount_term);
+                form.append("number_of_dependants",number_of_dependants);
+                form.append("property_area",property_area);
+                form.append("month_income",month_income);
+                form.append("Gender", gender);
+                form.append("Married", martial_state);
+                form.append("Education", education);
+                form.append("Self_Employed", employment_status);
+                form.append("Credit_History", credit_history);
+
+                await axios({
+                    // url: process.env.FLASK_TEST_API_URL,
+                    url: process.env.FLASK_API_URL,
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    data: form,
+                }).then((flask_res) => {data = flask_res.data})
+                
+                // console.log("Check")
+                // console.log(data)
+                // console.log(data['Loan_Status'])
+
+                if(data['Loan_Status']===1){
+                    return res.status(200).json({ status: "Approved" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender });
+                }
+                if(data['Loan_Status']===0){
+                    return res.status(200).json({ status: "Rejected" ,lamount,lamount_term,fname,lname,email,phone,dob,martial_state,number_of_dependants,education,address,country,city,property_area,employment_status,employment_industry,employer_name,month_income,gender });
+                }
+
+
                 // return res.status(200).json({ status: "Approved" });
             
             }
@@ -213,6 +252,36 @@ router.post("/register", async(req, res) => {
         return res.status(500).json({ error: "some error occured" });
     }
 });
+
+// Router to Register
+// router.post("/test", async(req, res) => {
+//     try {
+//         let data
+//         const form = new FormData();
+//         form.append("Gender", 'It worked');
+//         form.append("Married", 'It worked');
+//         form.append("Education", 'It worked');
+//         form.append("Self_Employed", 'It worked');
+//         form.append("Credit_History", 'It worked');
+
+//         await axios({
+//             url: 'http://127.0.0.1:8000/api/loan_approval',
+//             method: "POST",
+//             headers: { "Content-Type": "application/x-www-form-urlencoded" },
+//             data: form,
+//         }).then((flask_res) => {data = flask_res.data})
+
+        
+//         return res.status(200).json({ good: data });
+        
+
+        
+//     }
+//     catch (error) {
+//         // console.error(error.message)
+//         return res.status(500).json({ error: "some error occured" });
+//     }
+// });
 
 
 
