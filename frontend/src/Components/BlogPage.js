@@ -16,7 +16,7 @@ import CsvViewer from './Config/BlogPage/CsvViewer';
 import ScrollToTop from './Config/ScrollToTop';
 import assetContext from '../Context/Home/assetContext'
 
-import '../static/css/readBlog.css'
+// import '../static/css/readBlog.css'
 
 export default class BlogPage extends Component {
     static contextType = assetContext
