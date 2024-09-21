@@ -315,7 +315,23 @@ npm install
 
 ---
 
-## 8. Installing PM2
+## 8. Create a `.env` File
+
+To configure your backend environment, create a `.env` file in the backend folder with the following variables:
+
+```plaintext
+SECRET_KEY_FOR_REGISTRATION=
+SECRET_KEY_FOR_GOOGLE=
+GOOGLE_API_URL=
+SECRET_OR_KEY=
+MONGO_URI=
+```
+
+Ensure to replace the placeholders with your actual values before running your application. This file is crucial for securely managing sensitive information and configuration settings.
+
+---
+
+## 9. Installing PM2
 
 PM2 is a production process manager for Node.js applications. To install it globally, use:
 
